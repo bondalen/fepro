@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="002-001" author="fepro">
+        <comment>Enable PostGIS extension</comment>
+        
+        <sql>
+            CREATE EXTENSION IF NOT EXISTS postgis;
+            CREATE EXTENSION IF NOT EXISTS postgis_topology;
+            CREATE EXTENSION IF NOT EXISTS fuzzystrmatch;
+            CREATE EXTENSION IF NOT EXISTS postgis_tiger_geocoder;
+        </sql>
+    </changeSet>
+
+    <changeSet id="002-002" author="fepro">
+        <comment>Add geometry column to contractors table</comment>
+        
+        <sql>
+            -- Add geometry column for spatial data
+            ALTER TABLE contractors ADD COLUMN location GEOMETRY(POINT, 4326);
+            
+            -- Create spatial index
+            CREATE INDEX idx_contractors_location ON contractors USING GIST (location);
+        </sql>
+    </changeSet>
+
+    <changeSet id="002-003" author="fepro">
+        <comment>Create regions table for GIS analytics</comment>
+        
+        <createTable tableName="regions">
+            <column name="id" type="UUID" defaultValueComputed="gen_random_uuid()">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="type" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="boundary" type="GEOMETRY(POLYGON, 4326)"/>
+            <column name="center" type="GEOMETRY(POINT, 4326)"/>
+            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="002-004" author="fepro">
+        <comment>Create spatial indexes for regions</comment>
+        
+        <sql>
+            CREATE INDEX idx_regions_boundary ON regions USING GIST (boundary);
+            CREATE INDEX idx_regions_center ON regions USING GIST (center);
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="003-001" author="fepro">
+        <comment>Add performance indexes for users table</comment>
+        
+        <sql>
+            -- Index for username lookup
+            CREATE INDEX idx_users_username ON users (username);
+            
+            -- Index for email lookup
+            CREATE INDEX idx_users_email ON users (email);
+            
+            -- Index for role-based queries
+            CREATE INDEX idx_users_role ON users (role);
+            
+            -- Index for active users
+            CREATE INDEX idx_users_is_active ON users (is_active);
+            
+            -- Composite index for authentication
+            CREATE INDEX idx_users_username_active ON users (username, is_active);
+        </sql>
+    </changeSet>
+
+    <changeSet id="003-002" author="fepro">
+        <comment>Add performance indexes for contractors table</comment>
+        
+        <sql>
+            -- Index for name search
+            CREATE INDEX idx_contractors_name ON contractors USING gin (to_tsvector('russian', name));
+            
+            -- Index for INN lookup
+            CREATE INDEX idx_contractors_inn ON contractors (inn) WHERE inn IS NOT NULL;
+            
+            -- Index for email lookup
+            CREATE INDEX idx_contractors_email ON contractors (email) WHERE email IS NOT NULL;
+            
+            -- Index for status filtering
+            CREATE INDEX idx_contractors_status ON contractors (status);
+            
+            -- Index for creation date sorting
+            CREATE INDEX idx_contractors_created_at ON contractors (created_at DESC);
+            
+            -- Index for updates
+            CREATE INDEX idx_contractors_updated_at ON contractors (updated_at DESC);
+            
+            -- Composite index for active contractors
+            CREATE INDEX idx_contractors_active_created ON contractors (status, created_at DESC) WHERE status = 'ACTIVE';
+        </sql>
+    </changeSet>
+
+    <changeSet id="003-003" author="fepro">
+        <comment>Add performance indexes for contractor_contacts table</comment>
+        
+        <sql>
+            -- Index for contractor relationship
+            CREATE INDEX idx_contractor_contacts_contractor_id ON contractor_contacts (contractor_id);
+            
+            -- Index for primary contacts
+            CREATE INDEX idx_contractor_contacts_is_primary ON contractor_contacts (is_primary) WHERE is_primary = true;
+            
+            -- Index for email lookup
+            CREATE INDEX idx_contractor_contacts_email ON contractor_contacts (email) WHERE email IS NOT NULL;
+        </sql>
+    </changeSet>
+
+    <changeSet id="003-004" author="fepro">
+        <comment>Add performance indexes for regions table</comment>
+        
+        <sql>
+            -- Index for region name search
+            CREATE INDEX idx_regions_name ON regions USING gin (to_tsvector('russian', name));
+            
+            -- Index for region type filtering
+            CREATE INDEX idx_regions_type ON regions (type);
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>
