@@ -1,0 +1,100 @@
+# FEPRO - Federation Professionals
+# Main Spring Boot configuration
+spring:
+  application:
+    name: fepro
+  profiles:
+    active: dev
+  main:
+    banner-mode: console
+    web-application-type: servlet
+
+# Server configuration
+server:
+  port: 8082
+  servlet:
+    context-path: /api
+  compression:
+    enabled: true
+    mime-types: text/html,text/xml,text/plain,text/css,text/javascript,application/javascript,application/json
+    min-response-size: 1024
+
+# Management endpoints
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+      base-path: /actuator
+  endpoint:
+    health:
+      show-details: when-authorized
+      show-components: always
+  info:
+    env:
+      enabled: true
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+
+# Logging configuration
+logging:
+  level:
+    com.fepro: INFO
+    org.springframework: WARN
+    org.hibernate: WARN
+    org.postgresql: WARN
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+
+# GraphQL configuration
+graphql:
+  servlet:
+    mapping: /graphql
+    enabled: true
+    cors:
+      allowed-origins: "*"
+      allowed-methods: GET,POST,OPTIONS
+      allowed-headers: "*"
+
+# Hazelcast configuration
+hazelcast:
+  cluster-name: fepro-cluster
+  network:
+    port: 5701
+    port-auto-increment: true
+    port-count: 100
+  management-center:
+    enabled: false
+  cache:
+    default-ttl: 3600
+    default-max-size: 1000
+
+# Liquibase configuration
+spring:
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.xml
+    contexts: dev
+    drop-first: false
+    enabled: true
+
+# JPA configuration
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+        jdbc:
+          time_zone: UTC
+
+# Security configuration
+  security:
+    user:
+      name: admin
+      password: admin
+      roles: ADMIN

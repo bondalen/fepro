@@ -21,7 +21,7 @@
         "database": "PostgreSQL 16",
         "api": "GraphQL",
         "security": "JWT + Spring Security",
-        "cache": "Redis + Caffeine",
+        "cache": "Hazelcast + Caffeine",
         "migrations": "Liquibase",
         "reactive": "R2DBC",
         "monitoring": "Spring Boot Actuator"
@@ -39,7 +39,7 @@
       "infrastructure": {
         "containerization": "Docker + Docker Compose",
         "database": "PostgreSQL 16 + PostGIS",
-        "cache": "Redis",
+        "cache": "Hazelcast",
         "monitoring": "Spring Boot Actuator",
         "ai": "MCP Servers",
         "deployment": "Docker containers"
@@ -239,18 +239,77 @@
           "Git"
         ],
         "scripts": {
-          "dev": "mvn spring-boot:run",
-          "frontend": "npm run dev",
-          "build": "mvn clean package",
-          "test": "mvn test",
-          "migrate": "mvn liquibase:update",
-          "docker:up": "docker-compose up -d",
-          "docker:down": "docker-compose down"
+          "dev": {
+            "command": "mvn spring-boot:run",
+            "description": "Запуск Spring Boot приложения в режиме разработки",
+            "location": "backend/",
+            "usage": "Локальная разработка backend"
+          },
+          "frontend": {
+            "command": "npm run dev",
+            "description": "Запуск Vue.js приложения в режиме разработки",
+            "location": "frontend/",
+            "usage": "Локальная разработка frontend"
+          },
+          "build": {
+            "command": "mvn clean package",
+            "description": "Сборка Spring Boot приложения в JAR файл",
+            "location": "backend/",
+            "usage": "Сборка для production"
+          },
+          "test": {
+            "command": "mvn test",
+            "description": "Запуск unit тестов",
+            "location": "backend/",
+            "usage": "Тестирование backend кода"
+          },
+          "migrate": {
+            "command": "mvn liquibase:update",
+            "description": "Выполнение миграций базы данных",
+            "location": "backend/",
+            "usage": "Обновление схемы БД"
+          },
+          "docker:up": {
+            "command": "docker-compose up -d",
+            "description": "Запуск всех сервисов в Docker",
+            "location": "root/",
+            "usage": "Развертывание в Docker"
+          },
+          "docker:down": {
+            "command": "docker-compose down",
+            "description": "Остановка всех Docker сервисов",
+            "location": "root/",
+            "usage": "Остановка развертывания"
+          },
+          "deploy": {
+            "command": "./scripts/deploy.sh",
+            "description": "Полное развертывание приложения с проверками",
+            "location": "scripts/",
+            "usage": "Production развертывание"
+          },
+          "update": {
+            "command": "./scripts/update.sh",
+            "description": "Обновление приложения с сохранением данных",
+            "location": "scripts/",
+            "usage": "Обновление production версии"
+          },
+          "backup": {
+            "command": "./scripts/backup.sh",
+            "description": "Создание резервной копии базы данных",
+            "location": "scripts/",
+            "usage": "Резервное копирование данных"
+          },
+          "blue-green": {
+            "command": "./scripts/blue-green-deploy.sh",
+            "description": "Blue-Green развертывание без простоя",
+            "location": "scripts/",
+            "usage": "Безопасное обновление production"
+          }
         },
         "environment": {
           "development": {
             "database_url": "postgresql://fepro_user:fepro_pass@localhost:5432/fepro_dev",
-            "redis_url": "redis://localhost:6379",
+            "hazelcast_enabled": "true",
             "backend_port": "8082",
             "frontend_port": "3000"
           }
@@ -266,35 +325,81 @@
       }
     },
     "deployment": {
+      "strategy": "docker-single-image",
+      "architecture": {
+        "type": "monolithic",
+        "containers": ["app", "postgres"],
+        "networking": "internal",
+        "security": "non-root-user",
+        "caching": "hazelcast-embedded"
+      },
       "environments": {
         "development": {
           "database": "localhost:5432/fepro_dev",
           "frontend": "http://localhost:3000",
           "backend": "http://localhost:8082",
-          "cache": "localhost:6379",
-          "docker": true
+          "cache": "hazelcast-embedded",
+          "docker": true,
+          "profile": "dev"
         },
         "staging": {
           "database": "staging-db:5432/fepro_staging",
           "frontend": "https://staging.fepro.app",
           "backend": "https://api-staging.fepro.app",
-          "cache": "staging-redis:6379",
-          "docker": true
+          "cache": "hazelcast-embedded",
+          "docker": true,
+          "profile": "staging"
         },
         "production": {
           "database": "prod-db:5432/fepro_prod",
           "frontend": "https://fepro.app",
           "backend": "https://api.fepro.app",
-          "cache": "prod-redis:6379",
+          "cache": "hazelcast-embedded",
           "docker": true,
-          "ssl": true
+          "ssl": true,
+          "profile": "prod"
         }
       },
       "docker": {
-        "services": ["postgres", "redis", "backend", "frontend"],
+        "image": {
+          "name": "fepro-app",
+          "tag": "latest",
+          "base": "openjdk:21-jre-alpine",
+          "multi-stage": true,
+          "size": "~200-300MB",
+          "security": "non-root-user"
+        },
+        "services": {
+          "app": {
+            "build": ".",
+            "ports": ["8082:8082"],
+            "environment": ["SPRING_PROFILES_ACTIVE=prod"],
+            "depends_on": ["postgres"],
+            "restart": "unless-stopped",
+            "user": "fepro:1001"
+          },
+          "postgres": {
+            "image": "postgres:16-alpine",
+            "environment": ["POSTGRES_DB=fepro_prod"],
+            "volumes": ["postgres_data:/var/lib/postgresql/data"],
+            "restart": "unless-stopped"
+          }
+        },
         "compose": "docker-compose.yml",
-        "volumes": ["postgres_data", "redis_data"],
+        "volumes": ["postgres_data"],
         "networks": ["fepro_network"]
+      },
+      "monitoring": {
+        "health_checks": true,
+        "prometheus_metrics": true,
+        "logging": "file-rotation",
+        "backup": "daily-database"
+      },
+      "update_strategy": {
+        "type": "rolling-update",
+        "backup_before_update": true,
+        "health_check_after_update": true,
+        "rollback_on_failure": true
       }
     },
     "timeline": {

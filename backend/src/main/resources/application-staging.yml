@@ -1,0 +1,101 @@
+# FEPRO - Staging Environment Configuration
+spring:
+  profiles:
+    active: staging
+  
+  # Database configuration for staging
+  datasource:
+    url: jdbc:postgresql://staging-db:5432/fepro_staging
+    username: fepro_user
+    password: fepro_pass
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 20
+      minimum-idle: 10
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+
+  # JPA configuration for staging
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: false
+        use_sql_comments: false
+
+  # Liquibase configuration for staging
+  liquibase:
+    contexts: staging
+    drop-first: false
+    enabled: true
+
+# Server configuration for staging
+server:
+  port: 8082
+  servlet:
+    context-path: /api
+  compression:
+    enabled: true
+    mime-types: text/html,text/xml,text/plain,text/css,text/javascript,application/javascript,application/json
+    min-response-size: 1024
+
+# Logging configuration for staging
+logging:
+  level:
+    com.fepro: INFO
+    org.springframework: WARN
+    org.hibernate: WARN
+    org.postgresql: WARN
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+    file: "/app/logs/fepro-staging.log"
+  file:
+    name: "/app/logs/fepro-staging.log"
+    max-size: 100MB
+    max-history: 30
+
+# Hazelcast configuration for staging
+hazelcast:
+  cluster-name: fepro-staging-cluster
+  network:
+    port: 5701
+    port-auto-increment: true
+  management-center:
+    enabled: false
+  cache:
+    default-ttl: 3600
+    default-max-size: 1000
+
+# GraphQL configuration for staging
+graphql:
+  servlet:
+    mapping: /graphql
+    enabled: true
+    cors:
+      allowed-origins: "https://staging.fepro.app"
+      allowed-methods: GET,POST,OPTIONS
+      allowed-headers: "*"
+
+# Management endpoints for staging
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      show-details: when-authorized
+      show-components: always
+
+# Staging-specific properties
+fepro:
+  staging:
+    mock-data: false
+    debug-mode: false
+    hot-reload: false
+    external-apis:
+      enabled: true
+      timeout: 30000

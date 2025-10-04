@@ -1,0 +1,92 @@
+# FEPRO - Development Environment Configuration
+spring:
+  profiles:
+    active: dev
+  
+  # Database configuration for development
+  datasource:
+    url: jdbc:postgresql://localhost:5432/fepro_dev
+    username: fepro_user
+    password: fepro_pass
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 5
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+
+  # JPA configuration for development
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        use_sql_comments: true
+
+  # Liquibase configuration for development
+  liquibase:
+    contexts: dev
+    drop-first: false
+    enabled: true
+
+# Server configuration for development
+server:
+  port: 8082
+  servlet:
+    context-path: /api
+
+# Logging configuration for development
+logging:
+  level:
+    com.fepro: DEBUG
+    org.springframework: INFO
+    org.hibernate: INFO
+    org.postgresql: INFO
+    org.springframework.web: DEBUG
+    org.springframework.security: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+
+# Hazelcast configuration for development
+hazelcast:
+  cluster-name: fepro-dev-cluster
+  network:
+    port: 5701
+    port-auto-increment: true
+  management-center:
+    enabled: true
+    url: http://localhost:8080/hazelcast-mancenter
+  cache:
+    default-ttl: 1800
+    default-max-size: 500
+
+# GraphQL configuration for development
+graphql:
+  servlet:
+    mapping: /graphql
+    enabled: true
+    cors:
+      allowed-origins: "http://localhost:3000,http://localhost:8080"
+      allowed-methods: GET,POST,OPTIONS
+      allowed-headers: "*"
+
+# Management endpoints for development
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+      show-components: always
+
+# Development-specific properties
+fepro:
+  dev:
+    mock-data: true
+    debug-mode: true
+    hot-reload: true

@@ -1,0 +1,147 @@
+# FEPRO - Production Environment Configuration
+spring:
+  profiles:
+    active: prod
+  
+  # Database configuration for production
+  datasource:
+    url: jdbc:postgresql://postgres:5432/fepro_prod
+    username: fepro_user
+    password: fepro_pass
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 50
+      minimum-idle: 20
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+      leak-detection-threshold: 60000
+
+  # JPA configuration for production
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: false
+        use_sql_comments: false
+        jdbc:
+          batch_size: 25
+          batch_versioned_data: true
+        order_inserts: true
+        order_updates: true
+
+  # Liquibase configuration for production
+  liquibase:
+    contexts: prod
+    drop-first: false
+    enabled: true
+
+# Server configuration for production
+server:
+  port: 8082
+  servlet:
+    context-path: /api
+  compression:
+    enabled: true
+    mime-types: text/html,text/xml,text/plain,text/css,text/javascript,application/javascript,application/json
+    min-response-size: 1024
+  tomcat:
+    max-threads: 200
+    min-spare-threads: 20
+    max-connections: 8192
+    accept-count: 100
+    connection-timeout: 20000
+
+# Logging configuration for production
+logging:
+  level:
+    com.fepro: INFO
+    org.springframework: WARN
+    org.hibernate: WARN
+    org.postgresql: WARN
+    org.apache.tomcat: WARN
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+  file:
+    name: "/app/logs/fepro.log"
+    max-size: 100MB
+    max-history: 30
+    total-size-cap: 1GB
+
+# Hazelcast configuration for production
+hazelcast:
+  cluster-name: fepro-prod-cluster
+  network:
+    port: 5701
+    port-auto-increment: true
+    port-count: 100
+  management-center:
+    enabled: false
+  cache:
+    default-ttl: 7200
+    default-max-size: 5000
+  map:
+    default:
+      time-to-live-seconds: 7200
+      max-idle-seconds: 3600
+      eviction:
+        eviction-policy: LRU
+        max-size-policy: PER_NODE
+        size: 10000
+
+# GraphQL configuration for production
+graphql:
+  servlet:
+    mapping: /graphql
+    enabled: true
+    cors:
+      allowed-origins: "https://fepro.app"
+      allowed-methods: GET,POST,OPTIONS
+      allowed-headers: "*"
+
+# Management endpoints for production
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      show-details: never
+      show-components: always
+  info:
+    env:
+      enabled: true
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+
+# Security configuration for production
+spring:
+  security:
+    user:
+      name: ${FEPRO_ADMIN_USER:admin}
+      password: ${FEPRO_ADMIN_PASSWORD:admin}
+      roles: ADMIN
+
+# Production-specific properties
+fepro:
+  prod:
+    mock-data: false
+    debug-mode: false
+    hot-reload: false
+    external-apis:
+      enabled: true
+      timeout: 30000
+      retry-attempts: 3
+    monitoring:
+      enabled: true
+      metrics-interval: 60
+    backup:
+      enabled: true
+      schedule: "0 2 * * *"
+      retention-days: 30
