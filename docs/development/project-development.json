@@ -1,0 +1,236 @@
+{
+  "development": {
+    "metadata": {
+      "version": "1.0.0",
+      "created": "2025-10-05",
+      "lastUpdated": "2025-10-05",
+      "status": "active",
+      "projectManager": "Александр",
+      "repository": "https://github.com/bondalen/fepro.git",
+      "documentationRules": "docs/project-documentation-rules.md",
+      "numberingSystem": {
+        "description": "Расширенная система нумерации с буквами",
+        "capacity": "1,295 задач на уровень",
+        "format": "01-99, 0a-0z, 1a-1z, ..., 9a-9z, a0-a9, aa-az, b0-b9, ba-bz, ..., z0-z9, za-zz"
+      }
+    },
+    "tasks": [
+      {
+        "task": {
+          "displayName": "🚀 Backend разработка (in-progress, 40h, high). № 01",
+          "task-attributes": {
+        "id": "01",
+        "name": "Backend разработка",
+        "description": "Разработка серверной части приложения",
+        "startDate": "2025-01-02",
+        "endDate": "2025-01-20",
+        "status": "in-progress",
+        "priority": "high",
+        "assignee": "Александр",
+        "dependencies": [],
+            "timeSpent": "0 hours",
+            "estimatedTime": "40 hours",
+            "tags": ["backend", "infrastructure"],
+            "level": 1,
+            "parentId": null
+          },
+          "non-subtasks": {
+        "projectElements": [
+          "project.architecture.backend"
+        ],
+        "developmentLogs": [],
+        "artifacts": [],
+            "extendedDescriptions": {
+              "taskDescription": "docs/development/tasks/01-backend-development.md",
+              "technicalDetails": "docs/development/technical/backend-architecture.md",
+              "implementationNotes": "docs/development/notes/backend-implementation.md"
+            }
+          },
+        "subtasks": [
+          {
+              "task": {
+                "displayName": "⚙️ Spring Boot настройка (completed, 6h, high). № 01.01",
+                "task-attributes": {
+            "id": "01.01",
+            "name": "Spring Boot настройка",
+            "description": "Базовая настройка Spring Boot приложения",
+            "startDate": "2025-01-02",
+            "endDate": "2025-01-05",
+            "status": "completed",
+            "priority": "high",
+            "assignee": "Александр",
+            "dependencies": [],
+                  "timeSpent": "8 hours",
+                  "estimatedTime": "6 hours",
+                  "tags": ["spring-boot", "setup"],
+                  "level": 2,
+                  "parentId": "01"
+                },
+                "non-subtasks": {
+            "projectElements": [
+              "project.architecture.backend.framework",
+              "project.architecture.backend.language"
+            ],
+            "developmentLogs": [
+                    "log-2025-10-05-001",
+                    "log-2025-10-05-002"
+            ],
+            "artifacts": [
+              "src/app/backend/pom.xml",
+              "src/app/backend/src/main/java/io/github/bondalen/fepro/FeproApplication.java"
+            ],
+                  "extendedDescriptions": {
+                    "taskDescription": "docs/development/tasks/01.01-spring-boot-setup.md",
+                    "technicalDetails": "docs/development/technical/spring-boot-configuration.md",
+                    "implementationNotes": "docs/development/notes/spring-boot-implementation.md"
+                  }
+                },
+            "subtasks": [
+              {
+                    "task": {
+                      "displayName": "📦 Maven конфигурация (completed, 2h, high). № 01.01.01",
+                      "task-attributes": {
+                        "id": "01.01.01",
+                        "name": "Maven конфигурация",
+                        "description": "Настройка Maven проекта",
+                        "startDate": "2025-01-02",
+                        "endDate": "2025-01-03",
+                        "status": "completed",
+                        "priority": "high",
+                        "assignee": "Александр",
+                        "dependencies": [],
+                        "timeSpent": "2 hours",
+                        "estimatedTime": "2 hours",
+                        "tags": ["maven", "configuration"],
+                        "level": 3,
+                        "parentId": "01.01"
+                      },
+                      "non-subtasks": {
+                        "projectElements": [
+                          "project.architecture.backend.framework"
+                        ],
+                        "developmentLogs": [
+                          "log-2025-10-05-001"
+                        ],
+                        "artifacts": [
+                          "pom.xml"
+                        ],
+                        "extendedDescriptions": {
+                          "taskDescription": "docs/development/tasks/01.01.01-maven-configuration.md",
+                          "technicalDetails": "docs/development/technical/maven-setup.md",
+                          "implementationNotes": "docs/development/notes/maven-implementation.md"
+                        }
+                      },
+                "subtasks": [
+                  {
+                          "task": {
+                            "displayName": "🔧 Базовые зависимости (completed, 1h, high). № 01.01.01.01",
+                            "task-attributes": {
+                    "id": "01.01.01.01",
+                    "name": "Базовые зависимости",
+                    "description": "Добавление базовых Spring Boot зависимостей",
+                    "startDate": "2025-01-02",
+                    "endDate": "2025-01-02",
+                    "status": "completed",
+                    "priority": "high",
+                    "assignee": "Александр",
+                    "dependencies": [],
+                              "timeSpent": "1 hour",
+                              "estimatedTime": "1 hour",
+                              "tags": ["dependencies", "spring-boot"],
+                              "level": 4,
+                              "parentId": "01.01.01"
+                            },
+                            "non-subtasks": {
+                              "projectElements": [
+                                "project.architecture.backend.framework"
+                              ],
+                              "developmentLogs": [
+                                "log-2025-10-05-001"
+                              ],
+                              "artifacts": [
+                                "pom.xml"
+                              ],
+                              "extendedDescriptions": {
+                                "taskDescription": "docs/development/tasks/01.01.01.01-basic-dependencies.md",
+                                "technicalDetails": "docs/development/technical/spring-boot-dependencies.md",
+                                "implementationNotes": "docs/development/notes/dependencies-implementation.md"
+                              }
+                            },
+                    "subtasks": []
+                          }
+                  },
+                  {
+                          "task": {
+                            "displayName": "⚙️ Плагины Maven (completed, 1h, medium). № 01.01.01.02",
+                            "task-attributes": {
+                    "id": "01.01.01.02",
+                    "name": "Плагины Maven",
+                    "description": "Настройка Maven плагинов",
+                    "startDate": "2025-01-02",
+                    "endDate": "2025-01-02",
+                    "status": "completed",
+                    "priority": "medium",
+                    "assignee": "Александр",
+                    "dependencies": ["01.01.01.01"],
+                              "timeSpent": "1 hour",
+                              "estimatedTime": "1 hour",
+                              "tags": ["maven", "plugins"],
+                              "level": 4,
+                              "parentId": "01.01.01"
+                            },
+                            "non-subtasks": {
+                    "projectElements": [
+                      "project.architecture.backend.framework"
+                    ],
+                    "developmentLogs": [
+                                "log-2025-10-05-002"
+                    ],
+                    "artifacts": [
+                      "pom.xml"
+                              ]
+                            },
+                    "subtasks": []
+                          }
+                  },
+                  {
+                          "task": {
+                            "displayName": "🔧 Дополнительные плагины (pending, 1h, low). № 01.01.01.0a",
+                            "task-attributes": {
+                    "id": "01.01.01.0a",
+                    "name": "Дополнительные плагины",
+                    "description": "Настройка дополнительных Maven плагинов",
+                    "startDate": "2025-01-02",
+                    "endDate": "2025-01-02",
+                    "status": "pending",
+                    "priority": "low",
+                    "assignee": "Александр",
+                    "dependencies": ["01.01.01.02"],
+                    "timeSpent": "0 hours",
+                    "estimatedTime": "1 hour",
+                    "tags": ["maven", "plugins", "additional"],
+                    "level": 4,
+                              "parentId": "01.01.01"
+                            },
+                            "non-subtasks": {
+                    "projectElements": [
+                      "project.architecture.backend.framework"
+                    ],
+                    "developmentLogs": [],
+                              "artifacts": []
+                            },
+                    "subtasks": []
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
