@@ -3,31 +3,41 @@
     "metadata": {
       "name": "FEPRO",
       "version": "1.0.0",
-      "description": "Federation Professionals - система управления контрагентами",
+      "description": "Federation Professionals - система управления отношениями с контрагентами",
       "author": "Александр",
-      "created": "2025-01-02",
-      "lastUpdated": "2025-01-02",
+      "created": "2025-10-05",
+      "lastUpdated": "2025-10-05",
       "status": "planning",
       "repository": "https://github.com/bondalen/fepro.git",
       "license": "MIT",
-      "keywords": ["crm", "contractors", "business", "management", "federation"]
+      "keywords": ["crm", "contractors", "business", "management", "federation"],
+      "documentationRules": "docs/project-documentation-rules.md"
     },
     "architecture": {
       "type": "full-stack",
       "pattern": "modular-monolith",
+      "pattern_decision": "docs/decisions/007-modular-monolith-pattern.md",
       "backend": {
         "framework": "Spring Boot 3.4.5",
+        "framework_decision": "docs/decisions/006-spring-boot-framework-choice.md",
         "language": "Java 21 LTS",
         "database": "PostgreSQL 16",
+        "database_decision": "docs/decisions/005-postgresql-database-choice.md",
         "api": "GraphQL",
+        "api_decision": "docs/decisions/003-graphql-api-choice.md",
         "security": "JWT + Spring Security",
+        "security_decision": "docs/decisions/009-jwt-security-approach.md",
         "cache": "Hazelcast + Caffeine",
+        "cache_decision": "docs/decisions/001-hazelcast-choice.md",
         "migrations": "Liquibase",
+        "migrations_decision": "docs/decisions/010-liquibase-migrations-strategy.md",
         "reactive": "R2DBC",
+        "reactive_decision": "docs/decisions/008-r2dbc-reactive-choice.md",
         "monitoring": "Spring Boot Actuator"
       },
       "frontend": {
         "framework": "Vue.js 3.4.21",
+        "framework_decision": "docs/decisions/004-vuejs-framework-choice.md",
         "language": "TypeScript 5.4.0",
         "ui": "Quasar Framework 2.16.1",
         "graphql": "Apollo Client",
@@ -40,6 +50,7 @@
         "containerization": "Docker + Docker Compose",
         "database": "PostgreSQL 16 + PostGIS",
         "cache": "Hazelcast",
+        "cache_decision": "docs/decisions/001-hazelcast-choice.md",
         "monitoring": "Spring Boot Actuator",
         "ai": "MCP Servers",
         "deployment": "Docker containers"
@@ -319,19 +330,21 @@
         "codeStyle": "Google Java Style + ESLint/Prettier",
         "gitFlow": "GitHub Flow",
         "testing": "JUnit 5 + Vue Test Utils",
-        "documentation": "JSON + Markdown",
+        "documentation": "JSON + Markdown + ADR",
         "api": "GraphQL-first",
         "security": "JWT + RBAC"
       }
     },
     "deployment": {
       "strategy": "docker-single-image",
+      "strategy_decision": "docs/decisions/002-docker-architecture.md",
       "architecture": {
         "type": "monolithic",
         "containers": ["app", "postgres"],
         "networking": "internal",
         "security": "non-root-user",
-        "caching": "hazelcast-embedded"
+        "caching": "hazelcast-embedded",
+        "caching_decision": "docs/decisions/001-hazelcast-choice.md"
       },
       "environments": {
         "development": {
@@ -423,7 +436,7 @@
           "duration": "4 weeks",
           "startDate": "2025-01-16",
           "tasks": [
-            "Модуль управления контрагентами",
+            "Модуль управления отношениями с контрагентами",
             "Система аутентификации",
             "Базовый UI/UX",
             "API интеграция Frontend-Backend"
@@ -485,7 +498,13 @@
         "Docker Desktop",
         "Postman",
         "GitHub"
-      ]
+      ],
+      "documentation": {
+        "decisions": "docs/decisions/",
+        "architecture": "docs/architecture/",
+        "technical": "docs/technical/",
+        "template": "docs/decisions/decision-template.md"
+      }
     }
   }
 }

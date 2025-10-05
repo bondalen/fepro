@@ -1,0 +1,447 @@
+{
+  "development": {
+    "metadata": {
+      "version": "1.0.0",
+      "created": "2025-10-05",
+      "lastUpdated": "2025-10-05",
+      "status": "active",
+      "projectManager": "Александр",
+      "repository": "https://github.com/bondalen/fepro.git",
+      "documentationRules": "docs/project-documentation-rules.md",
+      "numberingSystem": {
+        "description": "Расширенная система нумерации с буквами",
+        "capacity": "1,295 задач на уровень",
+        "format": "01-99, 0a-0z, 1a-1z, ..., 9a-9z, a0-a9, aa-az, b0-b9, ba-bz, ..., z0-z9, za-zz"
+      }
+    },
+    "tasks": [
+      {
+        "id": "01",
+        "name": "Backend разработка",
+        "description": "Разработка серверной части приложения",
+        "startDate": "2025-01-02",
+        "endDate": "2025-01-20",
+        "status": "in-progress",
+        "priority": "high",
+        "assignee": "Александр",
+        "dependencies": [],
+        "projectElements": [
+          "project.architecture.backend"
+        ],
+        "developmentLogs": [],
+        "artifacts": [],
+        "timeSpent": "0 hours",
+        "estimatedTime": "40 hours",
+        "tags": ["backend", "infrastructure"],
+        "level": 1,
+        "parentId": null,
+        "subtasks": [
+          {
+            "id": "01.01",
+            "name": "Spring Boot настройка",
+            "description": "Базовая настройка Spring Boot приложения",
+            "startDate": "2025-01-02",
+            "endDate": "2025-01-05",
+            "status": "completed",
+            "priority": "high",
+            "assignee": "Александр",
+            "dependencies": [],
+            "projectElements": [
+              "project.architecture.backend.framework",
+              "project.architecture.backend.language"
+            ],
+            "developmentLogs": [
+              "log-2025-10-05-001",
+              "log-2025-10-05-002"
+            ],
+            "artifacts": [
+              "src/app/backend/pom.xml",
+              "src/app/backend/src/main/java/io/github/bondalen/fepro/FeproApplication.java"
+            ],
+            "timeSpent": "8 hours",
+            "estimatedTime": "6 hours",
+            "tags": ["spring-boot", "setup"],
+            "level": 2,
+            "parentId": "01",
+            "subtasks": [
+              {
+                "id": "01.01.01",
+                "name": "Maven конфигурация",
+                "description": "Настройка Maven проекта",
+                "startDate": "2025-01-02",
+                "endDate": "2025-01-03",
+                "status": "completed",
+                "priority": "high",
+                "assignee": "Александр",
+                "dependencies": [],
+                "projectElements": [
+                  "project.architecture.backend.framework"
+                ],
+                "developmentLogs": [
+                  "log-2025-10-05-001"
+                ],
+                "artifacts": [
+                  "pom.xml"
+                ],
+                "timeSpent": "2 hours",
+                "estimatedTime": "2 hours",
+                "tags": ["maven", "configuration"],
+                "level": 3,
+                "parentId": "01.01",
+                "subtasks": [
+                  {
+                    "id": "01.01.01.01",
+                    "name": "Базовые зависимости",
+                    "description": "Добавление базовых Spring Boot зависимостей",
+                    "startDate": "2025-01-02",
+                    "endDate": "2025-01-02",
+                    "status": "completed",
+                    "priority": "high",
+                    "assignee": "Александр",
+                    "dependencies": [],
+                    "projectElements": [
+                      "project.architecture.backend.framework"
+                    ],
+                    "developmentLogs": [
+                      "log-2025-10-05-001"
+                    ],
+                    "artifacts": [
+                      "pom.xml"
+                    ],
+                    "timeSpent": "1 hour",
+                    "estimatedTime": "1 hour",
+                    "tags": ["dependencies", "spring-boot"],
+                    "level": 4,
+                    "parentId": "01.01.01",
+                    "subtasks": []
+                  },
+                  {
+                    "id": "01.01.01.02",
+                    "name": "Плагины Maven",
+                    "description": "Настройка Maven плагинов",
+                    "startDate": "2025-01-02",
+                    "endDate": "2025-01-02",
+                    "status": "completed",
+                    "priority": "medium",
+                    "assignee": "Александр",
+                    "dependencies": ["01.01.01.01"],
+                    "projectElements": [
+                      "project.architecture.backend.framework"
+                    ],
+                    "developmentLogs": [
+                      "log-2025-10-05-002"
+                    ],
+                    "artifacts": [
+                      "pom.xml"
+                    ],
+                    "timeSpent": "1 hour",
+                    "estimatedTime": "1 hour",
+                    "tags": ["maven", "plugins"],
+                    "level": 4,
+                    "parentId": "01.01.01",
+                    "subtasks": []
+                  },
+                  {
+                    "id": "01.01.01.0a",
+                    "name": "Дополнительные плагины",
+                    "description": "Настройка дополнительных Maven плагинов",
+                    "startDate": "2025-01-02",
+                    "endDate": "2025-01-02",
+                    "status": "pending",
+                    "priority": "low",
+                    "assignee": "Александр",
+                    "dependencies": ["01.01.01.02"],
+                    "projectElements": [
+                      "project.architecture.backend.framework"
+                    ],
+                    "developmentLogs": [],
+                    "artifacts": [],
+                    "timeSpent": "0 hours",
+                    "estimatedTime": "1 hour",
+                    "tags": ["maven", "plugins", "additional"],
+                    "level": 4,
+                    "parentId": "01.01.01",
+                    "subtasks": []
+                  },
+                  {
+                    "id": "01.01.01.0b",
+                    "name": "Профили сборки",
+                    "description": "Настройка профилей сборки для разных окружений",
+                    "startDate": "2025-01-02",
+                    "endDate": "2025-01-02",
+                    "status": "pending",
+                    "priority": "low",
+                    "assignee": "Александр",
+                    "dependencies": ["01.01.01.0a"],
+                    "projectElements": [
+                      "project.architecture.backend.framework"
+                    ],
+                    "developmentLogs": [],
+                    "artifacts": [],
+                    "timeSpent": "0 hours",
+                    "estimatedTime": "2 hours",
+                    "tags": ["maven", "profiles", "build"],
+                    "level": 4,
+                    "parentId": "01.01.01",
+                    "subtasks": []
+                  }
+                ]
+              },
+              {
+                "id": "01.01.02",
+                "name": "Основной класс приложения",
+                "description": "Создание главного класса Spring Boot приложения",
+                "startDate": "2025-01-03",
+                "endDate": "2025-01-03",
+                "status": "completed",
+                "priority": "high",
+                "assignee": "Александр",
+                "dependencies": ["01.01.01"],
+                "projectElements": [
+                  "project.architecture.backend.framework"
+                ],
+                "developmentLogs": [
+                  "log-2025-01-03-001"
+                ],
+                "artifacts": [
+                  "src/main/java/io/github/bondalen/fepro/FeproApplication.java"
+                ],
+                "timeSpent": "1 hour",
+                "estimatedTime": "1 hour",
+                "tags": ["java", "spring-boot"],
+                "level": 3,
+                "parentId": "01.01",
+                "subtasks": []
+              }
+            ]
+          },
+          {
+            "id": "01.02",
+            "name": "База данных",
+            "description": "Настройка PostgreSQL и миграций",
+            "startDate": "2025-01-05",
+            "endDate": "2025-01-10",
+            "status": "in-progress",
+            "priority": "high",
+            "assignee": "Александр",
+            "dependencies": ["01.01"],
+            "projectElements": [
+              "project.architecture.backend.database",
+              "project.architecture.backend.migrations"
+            ],
+            "developmentLogs": [],
+            "artifacts": [],
+            "timeSpent": "0 hours",
+            "estimatedTime": "12 hours",
+            "tags": ["database", "postgresql", "liquibase"],
+            "level": 2,
+            "parentId": "01",
+            "subtasks": [
+              {
+                "id": "01.02.01",
+                "name": "PostgreSQL настройка",
+                "description": "Настройка подключения к PostgreSQL",
+                "startDate": "2025-01-05",
+                "endDate": "2025-01-06",
+                "status": "pending",
+                "priority": "high",
+                "assignee": "Александр",
+                "dependencies": ["01.01"],
+                "projectElements": [
+                  "project.architecture.backend.database"
+                ],
+                "developmentLogs": [],
+                "artifacts": [],
+                "timeSpent": "0 hours",
+                "estimatedTime": "4 hours",
+                "tags": ["postgresql", "configuration"],
+                "level": 3,
+                "parentId": "01.02",
+                "subtasks": []
+              },
+              {
+                "id": "01.02.02",
+                "name": "Liquibase миграции",
+                "description": "Настройка Liquibase для миграций БД",
+                "startDate": "2025-01-06",
+                "endDate": "2025-01-08",
+                "status": "pending",
+                "priority": "high",
+                "assignee": "Александр",
+                "dependencies": ["01.02.01"],
+                "projectElements": [
+                  "project.architecture.backend.migrations"
+                ],
+                "developmentLogs": [],
+                "artifacts": [],
+                "timeSpent": "0 hours",
+                "estimatedTime": "6 hours",
+                "tags": ["liquibase", "migrations"],
+                "level": 3,
+                "parentId": "01.02",
+                "subtasks": []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "02",
+        "name": "Frontend разработка",
+        "description": "Разработка клиентской части приложения",
+        "startDate": "2025-01-10",
+        "endDate": "2025-01-25",
+        "status": "pending",
+        "priority": "high",
+        "assignee": "Александр",
+        "dependencies": ["01"],
+        "projectElements": [
+          "project.architecture.frontend"
+        ],
+        "developmentLogs": [],
+        "artifacts": [],
+        "timeSpent": "0 hours",
+        "estimatedTime": "35 hours",
+        "tags": ["frontend", "vue.js"],
+        "level": 1,
+        "parentId": null,
+        "subtasks": [
+          {
+            "id": "02.01",
+            "name": "Vue.js настройка",
+            "description": "Базовая настройка Vue.js приложения",
+            "startDate": "2025-01-10",
+            "endDate": "2025-01-12",
+            "status": "pending",
+            "priority": "high",
+            "assignee": "Александр",
+            "dependencies": ["01"],
+            "projectElements": [
+              "project.architecture.frontend.framework"
+            ],
+            "developmentLogs": [],
+            "artifacts": [],
+            "timeSpent": "0 hours",
+            "estimatedTime": "6 hours",
+            "tags": ["vue.js", "setup"],
+            "level": 2,
+            "parentId": "02",
+            "subtasks": []
+          }
+        ]
+      },
+      {
+        "id": "0a",
+        "name": "Документация",
+        "description": "Создание и поддержка документации проекта",
+        "startDate": "2025-01-02",
+        "endDate": "2025-01-30",
+        "status": "in-progress",
+        "priority": "medium",
+        "assignee": "Александр",
+        "dependencies": [],
+        "projectElements": [
+          "project.documentation"
+        ],
+        "developmentLogs": [],
+        "artifacts": [],
+        "timeSpent": "0 hours",
+        "estimatedTime": "20 hours",
+        "tags": ["documentation", "markdown", "json"],
+        "level": 1,
+        "parentId": null,
+        "subtasks": [
+          {
+            "id": "0a.01",
+            "name": "ADR документация",
+            "description": "Создание Architectural Decision Records",
+            "startDate": "2025-01-02",
+            "endDate": "2025-01-05",
+            "status": "completed",
+            "priority": "high",
+            "assignee": "Александр",
+            "dependencies": [],
+            "projectElements": [
+              "project.documentation.decisions"
+            ],
+            "developmentLogs": [
+              "log-2025-10-05-003"
+            ],
+            "artifacts": [
+              "docs/decisions/001-hazelcast-choice.md",
+              "docs/decisions/002-docker-architecture.md"
+            ],
+            "timeSpent": "4 hours",
+            "estimatedTime": "6 hours",
+            "tags": ["adr", "decisions", "markdown"],
+            "level": 2,
+            "parentId": "0a",
+            "subtasks": []
+          },
+          {
+            "id": "0a.0a",
+            "name": "Техническая документация",
+            "description": "Создание технической документации",
+            "startDate": "2025-01-05",
+            "endDate": "2025-01-10",
+            "status": "pending",
+            "priority": "medium",
+            "assignee": "Александр",
+            "dependencies": ["0a.01"],
+            "projectElements": [
+              "project.documentation.technical"
+            ],
+            "developmentLogs": [],
+            "artifacts": [],
+            "timeSpent": "0 hours",
+            "estimatedTime": "8 hours",
+            "tags": ["technical", "documentation", "markdown"],
+            "level": 2,
+            "parentId": "0a",
+            "subtasks": []
+          },
+          {
+            "id": "0a.a0",
+            "name": "API документация",
+            "description": "Создание документации API",
+            "startDate": "2025-01-10",
+            "endDate": "2025-01-15",
+            "status": "pending",
+            "priority": "medium",
+            "assignee": "Александр",
+            "dependencies": ["0a.0a"],
+            "projectElements": [
+              "project.documentation.api"
+            ],
+            "developmentLogs": [],
+            "artifacts": [],
+            "timeSpent": "0 hours",
+            "estimatedTime": "6 hours",
+            "tags": ["api", "documentation", "graphql"],
+            "level": 2,
+            "parentId": "0a",
+            "subtasks": []
+          }
+        ]
+      }
+    ],
+    "milestones": [
+      {
+        "id": "milestone-1",
+        "name": "Базовая инфраструктура готова",
+        "date": "2025-01-15",
+        "status": "pending",
+        "tasks": ["01", "01.01", "01.02"]
+      }
+    ],
+    "resources": [
+      {
+        "id": "resource-1",
+        "name": "Александр",
+        "role": "Full-stack Developer",
+        "availability": "100%",
+        "skills": ["Java", "Spring Boot", "Vue.js", "PostgreSQL"]
+      }
+    ]
+  }
+}

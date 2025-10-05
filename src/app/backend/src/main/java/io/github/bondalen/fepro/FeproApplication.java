@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
  * Главный класс приложения FEPRO
- * Federation Professionals - система управления контрагентами
+ * Federation Professionals - система управления отношениями с контрагентами
  */
 @SpringBootApplication
 public class FeproApplication {

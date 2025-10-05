@@ -100,7 +100,7 @@ fepro:
   app:
     name: FEPRO
     version: 1.0.0
-    description: Federation Professionals - система управления контрагентами
+    description: Federation Professionals - система управления отношениями с контрагентами
   
   # Pagination defaults
   pagination:

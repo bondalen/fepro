@@ -1,7 +1,7 @@
 {
   "name": "fepro-frontend",
   "version": "1.0.0",
-  "description": "Frontend для системы управления контрагентами FEPRO",
+  "description": "Frontend для системы управления отношениями с контрагентами FEPRO",
   "private": true,
   "type": "module",
   "scripts": {
